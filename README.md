@@ -35,6 +35,11 @@ Those are the conventions:
 1. A `env` file must defined to set your stack name and param file to be used:
 
     ```
+    $ cat sample.env.sh
+        export file=sns-sqs.template.yaml
+        export stack=sns-sqs-sample-01
+        export param=sample.param.json
+
     $ source ./sample.env.sh
     ```
 
@@ -99,13 +104,13 @@ I built a `Makefile` with some helper tasks to accomplish that. For example:
 
     Usage (faster):
       $ make                    # show help
-      $ source ./sample.env.sh  # define vars file/stack/param
+      $ source ./sample.env.sh  # define vars: file/stack/param
       $ make vt                 # validate template
       $ make cs                 # create stack
       $ make se                 # follow stack events
 
     Where:
-      file.env.sh: shell script with environment variables.
+      sample.env.sh: shell script with environment variables.
 
     ```
 
