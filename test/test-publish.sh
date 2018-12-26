@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# Test:
+#   publish to the created Topic inside stack
+#
+# 2018-10     ferreira.mv
 
 [ "${1}" == "" ] && {
   echo
