@@ -40,7 +40,7 @@ show:
 	@echo "--     file=${file}"
 	@echo "--     stack=${stack}"
 	@echo "--     param=${param}"
-	@[ "${force}" ] && echo "-- Force: force=${force}" || echo
+	@[ "${force}" ] && echo "--     force=${force}" || echo
 
 cs:
 	@ file=${file} stack=${stack} param=${param} \
