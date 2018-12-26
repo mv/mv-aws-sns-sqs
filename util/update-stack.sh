@@ -27,5 +27,5 @@ set -x
 aws cloudformation update-stack \
   --stack-name ${stack}  \
   --template-body file://"${file}" \
-  ${param}
+  ${paramf}
 

@@ -6,6 +6,6 @@
   { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"    },
   { "ParameterKey": "Tag2Value" , "ParameterValue": "test"   },
   { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
-  { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "10000"   }
+  { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "500"   }
 ]
 

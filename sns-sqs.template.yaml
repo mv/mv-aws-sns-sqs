@@ -47,7 +47,7 @@ Parameters:
   QueueAlarmDepth:
     Type: Number
     Default: 10000
-    MinValue: 1000
+    MinValue: 100
     Description: "Alarm will fire if queue grows beyond this depth."
 
   Tag1Key:
