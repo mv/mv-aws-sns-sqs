@@ -109,16 +109,6 @@ Resources:
         - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
         - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }
 
-  MySQSDeadLetter:
-    Type: AWS::SQS::Queue
-    Properties:
-      QueueName: !Join [ '-', [ !Ref TopicName, "dl" ] ]
-      MessageRetentionPeriod: 1209600
-      Tags:
-        - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
-        - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }
-
-
   # Ref:
   #   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-iam.html
   #
@@ -139,8 +129,7 @@ Resources:
       Queues:
         - !Ref MySQSQueue
 
-
-  #
+  #                               k
   # Ref:
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-okactions
   #
@@ -167,5 +156,36 @@ Resources:
     # InsufficientDataActions:
     #   - !Ref AlarmTopic
 
+
+
+  ###
+  ### SQS Dead Letter
+  ###   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
+  ###
+  MySQSDeadLetter:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Join [ '-', [ !Ref TopicName, "dl" ] ]
+      MessageRetentionPeriod: 1209600
+      Tags:
+        - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
+        - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }
+
+  MySQSDeadLetterDepthAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Join [ '-', [ "sqs-dl-alarm", !Ref TopicName ] ]
+      AlarmDescription: "Alarm if dead letter queue gets any message"
+      Namespace: "AWS/SQS"
+      MetricName: "ApproximateNumberOfMessagesVisible"
+      Dimensions:
+        -
+          Name: "QueueName"
+          Value: !GetAtt [ "MySQSDeadLetter", "QueueName" ]
+      Statistic: "Sum"
+      Period: "300"
+      EvaluationPeriods: "1"
+      Threshold: "1"
+      ComparisonOperator: "GreaterThanThreshold"
 
 
