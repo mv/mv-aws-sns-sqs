@@ -1,0 +1,124 @@
+###
+### Ref:
+###   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
+###
+
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: "SNS/SQS/Messaging: with dead letter and depth alarm"
+
+Parameters:
+
+  TopicName:
+    Type: String
+    Default: test
+    Description: "Name: topic/queue names"
+
+  TagApp:
+    Type: String
+    Default: test
+    Description: "Tag: App"
+
+  TagEnv:
+    Type: String
+    Default: test
+    Description: "Tag: Env"
+
+Resources:
+
+  ###
+  ### SNS
+  ###   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
+  ###
+  MySNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName:   !Join [ '-', [ !Ref TopicName, "alerts" ] ]
+      DisplayName: !Join [ '-', [ !Ref TopicName, "alerts" ] ]
+      Subscription:
+        - { "Protocol":"sqs", "Endpoint": !GetAtt [ "MySQSQueue" , "Arn" ] }
+
+
+  ###
+  ### SQS
+  ###   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
+  ###
+
+  # RetentionPeriod           VisibilityTimeout   ReceiveMessageWaitTime
+  #     Min:      60s -  1m         0s                  0s
+  #     Max: 1209600s - 14d     43200s - 12h           20s
+  # Default:  345600s -  4d        30s                  0s
+  #
+  MySQSQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Join [ '-', [ !Ref TopicName, "alerts" ] ]
+      VisibilityTimeout: 60
+      MessageRetentionPeriod: 1209600
+      ReceiveMessageWaitTimeSeconds: 5
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt [ "MySQSDeadLetter", "Arn" ]
+        maxReceiveCount: 1000
+      Tags:
+        - { "Key" : "App", "Value" : !Ref TagApp }
+        - { "Key" : "Env", "Value" : !Ref TagEnv }
+
+  MySQSDeadLetter:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Join [ '-', [ !Ref TopicName, "alerts-deadletter" ] ]
+      MessageRetentionPeriod: 1209600
+      Tags:
+        - { "Key" : "App", "Value" : !Ref TagApp }
+        - { "Key" : "Env", "Value" : !Ref TagEnv }
+
+
+  # Ref:
+  #   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-iam.html
+  #
+  MyQueuePolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      PolicyDocument:
+        Id: MyQueuePolicy
+        Statement:
+          -
+            Sid: "Allow-SQSSendMessage-From-SNSTopic"
+            Effect: "Allow"
+            Action: "sqs:SendMessage"
+            Resource: "*"
+            Principal: "*"
+            Condition:
+              ArnEquals: { "aws:SourceArn": !Ref MySNSTopic }
+      Queues:
+        - !Ref MySQSQueue
+
+
+  #
+  # Ref:
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#cfn-cloudwatch-alarms-okactions
+  #
+  MyQueueDepthAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: "Alarm if queue depth grows beyond 10.000 messages"
+      Namespace: "AWS/SQS"
+      MetricName: "ApproximateNumberOfMessagesVisible"
+      Dimensions:
+        -
+          Name: "QueueName"
+          Value: !GetAtt [ "MySQSQueue", "QueueName" ]
+      Statistic: "Sum"
+      Period: "300"
+      EvaluationPeriods: "1"
+      Threshold: "10000"
+      ComparisonOperator: "GreaterThanThreshold"
+    # OkActions:
+    #   - !Ref AlarmTopic
+    # AlarmActions:
+    #   - !Ref AlarmTopic
+    # InsufficientDataActions:
+    #   - !Ref AlarmTopic
+
+
+
