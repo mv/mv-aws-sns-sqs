@@ -17,11 +17,10 @@ A parameter file must be defined to create a topic/queue combination. Also,
 Those are the conventions:
 
     ```
-    Stack             TopicName         QueueName         DeadLetter                   Alarm
-    sample-01         sample-01         sample-01         sample-01-deadletter         sample-01
-    sample-02         sample-02         sample-02         sample-02-deadletter         sample-02
-    org-trail         org-trail         org-trail         org-trail-deadletter         org-trail
-    trail-data-plane  trail-data-plane  trail-data-plane  trail-data-plane-deadletter  trail-data-plane
+    Stack     Param     TopicName        QueueName        DeadLetter                  Alarm
+    sample-01 sample    sample-alerts    sample-alerts    sample-alerts-deadletter    sample-alerts-sqs-alarm
+    sample-02 sample-02 sample-02-alerts sample-02-alerts sample-02-alerts-deadletter sample-02-alerts-sqs-alarm
+    org-trail org-trail org-trail-alerts org-trail-alerts org-trail-alerts-deadletter org-trail-alerts-sqs-alarm
     ```
 
 

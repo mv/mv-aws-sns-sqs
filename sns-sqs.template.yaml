@@ -101,7 +101,8 @@ Resources:
   MyQueueDepthAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmDescription: "Alarm if queue depth grows beyond 10.000 messages"
+      AlarmName: !Join [ '-', [ !Ref TopicName, "alerts-sqs-alarm" ] ]
+      AlarmDescription: "Alarm if queue depth grows beyond 'n' messages"
       Namespace: "AWS/SQS"
       MetricName: "ApproximateNumberOfMessagesVisible"
       Dimensions:
