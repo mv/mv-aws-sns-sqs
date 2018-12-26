@@ -12,17 +12,40 @@ Parameters:
   TopicName:
     Type: String
     Default: test
-    Description: "Name: topic/queue names"
+    Description: "Name for topic/queue"
 
-  TagApp:
+  QueueRetentionPeriod:
+    Type: Number
+    Default: 1209600
+    MinValue: 50
+    MaxValue: 1209600
+    Description: "SQS MessageRetentionPeriod in seconds."
+
+  QueueAlarmDepth:
+    Type: Number
+    Default: 10000
+    MinValue: 1000
+    Description: "Alarm will fire if queue grows beyond this depth."
+
+  Tag1Key:
+    Type: String
+    Default: App
+    Description: "Key for Tag1: App=sample"
+
+  Tag1Value:
+    Type: String
+    Default: sample
+    Description: "Value for Tag1: App=sample"
+
+  Tag2Key:
+    Type: String
+    Default: Env
+    Description: "Key for Tag2: Env=test"
+
+  Tag2Value:
     Type: String
     Default: test
-    Description: "Tag: App"
-
-  TagEnv:
-    Type: String
-    Default: test
-    Description: "Tag: Env"
+    Description: "Value for Tag2: Env=test"
 
 Resources:
 
@@ -54,14 +77,14 @@ Resources:
     Properties:
       QueueName: !Join [ '-', [ !Ref TopicName, "alerts" ] ]
       VisibilityTimeout: 60
-      MessageRetentionPeriod: 1209600
+      MessageRetentionPeriod: !Ref QueueRetentionPeriod
       ReceiveMessageWaitTimeSeconds: 5
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt [ "MySQSDeadLetter", "Arn" ]
         maxReceiveCount: 1000
       Tags:
-        - { "Key" : "App", "Value" : !Ref TagApp }
-        - { "Key" : "Env", "Value" : !Ref TagEnv }
+        - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
+        - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }
 
   MySQSDeadLetter:
     Type: AWS::SQS::Queue
@@ -69,8 +92,8 @@ Resources:
       QueueName: !Join [ '-', [ !Ref TopicName, "alerts-deadletter" ] ]
       MessageRetentionPeriod: 1209600
       Tags:
-        - { "Key" : "App", "Value" : !Ref TagApp }
-        - { "Key" : "Env", "Value" : !Ref TagEnv }
+        - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
+        - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }
 
 
   # Ref:
@@ -112,7 +135,7 @@ Resources:
       Statistic: "Sum"
       Period: "300"
       EvaluationPeriods: "1"
-      Threshold: "10000"
+      Threshold: !Ref QueueAlarmDepth
       ComparisonOperator: "GreaterThanThreshold"
     # OkActions:
     #   - !Ref AlarmTopic

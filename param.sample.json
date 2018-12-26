@@ -1,7 +1,0 @@
-
-[
-  { "ParameterKey": "TopicName" , "ParameterValue": "sample"  },
-  { "ParameterKey": "TagApp"    , "ParameterValue": "sample"  },
-  { "ParameterKey": "TagEnv"    , "ParameterValue": "test"    }
-]
-
