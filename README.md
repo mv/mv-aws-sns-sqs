@@ -94,6 +94,7 @@ Those are the conventions:
       $ make vt                 # validate template
       $ make cs                 # create stack
       $ make se                 # follow stack events
+      $ make ds force=y         # force delete stack
 
     Where:
       sample.env.sh: shell script with environment variables.
