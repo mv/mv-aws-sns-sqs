@@ -56,8 +56,8 @@ Resources:
   MySNSTopic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName:   !Join [ '-', [ !Ref TopicName, "alerts" ] ]
-      DisplayName: !Join [ '-', [ !Ref TopicName, "alerts" ] ]
+      TopicName:   !Ref TopicName
+      DisplayName: !Ref TopicName
       Subscription:
         - { "Protocol":"sqs", "Endpoint": !GetAtt [ "MySQSQueue" , "Arn" ] }
 
@@ -75,7 +75,7 @@ Resources:
   MySQSQueue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: !Join [ '-', [ !Ref TopicName, "alerts" ] ]
+      QueueName: !Ref TopicName
       VisibilityTimeout: 60
       MessageRetentionPeriod: !Ref QueueRetentionPeriod
       ReceiveMessageWaitTimeSeconds: 5
@@ -89,7 +89,7 @@ Resources:
   MySQSDeadLetter:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: !Join [ '-', [ !Ref TopicName, "alerts-deadletter" ] ]
+      QueueName: !Join [ '-', [ !Ref TopicName, "dl" ] ]
       MessageRetentionPeriod: 1209600
       Tags:
         - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
@@ -124,7 +124,7 @@ Resources:
   MyQueueDepthAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmName: !Join [ '-', [ !Ref TopicName, "alerts-sqs-alarm" ] ]
+      AlarmName: !Join [ '-', [ "sqs-alarm", !Ref TopicName ] ]
       AlarmDescription: "Alarm if queue depth grows beyond 'n' messages"
       Namespace: "AWS/SQS"
       MetricName: "ApproximateNumberOfMessagesVisible"
