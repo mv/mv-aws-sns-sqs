@@ -34,7 +34,7 @@ Parameters:
 
   TopicName:
     Type: String
-    Default: test
+    Default: sample-topic-for-test
     Description: "Name for topic/queue"
 
   QueueRetentionPeriod:
