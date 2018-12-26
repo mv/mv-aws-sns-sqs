@@ -1,6 +1,29 @@
 ###
-### Ref:
-###   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sns-topic.html
+### To execute this script you can:
+###
+### 1. Use the AWS console -> Cloudformation -> Create Stack
+###
+### or
+###
+### 2. Use the awscli command line tool:
+###
+###    $ aws cloudformation create-stack  \
+###        --stack-name my-sample-sns-sqs \
+###        --template-body file://sns-sqs.template.yaml \
+###        --parameters file://sample.param.json
+###
+###
+### A parameter file must be in the following format:
+###
+###     [
+###       { "ParameterKey": "TopicName" , "ParameterValue": "sample" },
+###       { "ParameterKey": "Tag1Key"   , "ParameterValue": "App"    },
+###       { "ParameterKey": "Tag1Value" , "ParameterValue": "sample" },
+###       { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"    },
+###       { "ParameterKey": "Tag2Value" , "ParameterValue": "test"   },
+###       { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
+###       { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "10000"   }
+###     ]
 ###
 
 AWSTemplateFormatVersion: "2010-09-09"
