@@ -11,13 +11,14 @@ name="${name##*/}"  # remove "/path/*/dir/*"
 
 [ "${1}" == "" ] && {
   echo
-  echo "  Usage: $0  filename.ext|stack-name  [count] [sleep]"
+  echo "  Usage: $0  filename.ext|stack-name  [count] [sleep] [lines]"
   echo
   exit 1
 }
 
 counter=${2:-12}
 sleeps=${3:-10}
+lines=${4:-8}
 
 while true
 do
@@ -25,14 +26,14 @@ do
   clear
   echo "== File:  [${file}]               $(date +%Y-%m-%d-%H:%M:%S)"
   echo "== Name:  [${name}]"
-  echo "== Sleep: ${sleeps}s  Counter: ${counter}"
+  echo "== Sleep: ${sleeps}s  Counter: ${counter}  Lines: ${lines}"
   echo
 
   aws cloudformation describe-stack-events \
     --stack-name "${name}" \
     --output text \
     --query 'StackEvents[*].{Resource:ResourceType, Status:ResourceStatus, Timestamp:Timestamp}' \
-    | head -12 | column -t
+    | head -${lines} | column -t
 
   [ ${counter} -eq 0 ] && exit
   let counter-=1
