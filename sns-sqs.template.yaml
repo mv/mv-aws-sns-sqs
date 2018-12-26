@@ -104,7 +104,7 @@ Resources:
       ReceiveMessageWaitTimeSeconds: 5
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt [ "MySQSDeadLetter", "Arn" ]
-        maxReceiveCount: 1000
+        maxReceiveCount: 100
       Tags:
         - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
         - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }
