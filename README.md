@@ -75,10 +75,11 @@ Those are the conventions:
 
     ```
     Usage:
-      $ make                                                        # show help
-      $ file=filename.yml stack=stackname [param=paramfile] make vt # validate template
-      $ file=filename.yml stack=stackname [param=paramfile] make cs # create stack
-      $ file=filename.yml stack=stackname [param=paramfile] make us # update stack
+      $ make                                                          # show help
+      $ file=filename.yml stack=stackname [param=paramfile] make show # show defined vars
+      $ file=filename.yml stack=stackname [param=paramfile] make vt   # validate template
+      $ file=filename.yml stack=stackname [param=paramfile] make cs   # create stack
+      $ file=filename.yml stack=stackname [param=paramfile] make us   # update stack
 
     Where:
       filename.yml: AWS Cloudformation template file to be used.
@@ -89,6 +90,7 @@ Those are the conventions:
     Usage (faster):
       $ make                    # show help
       $ source ./sample.env.sh  # define vars: file/stack/param
+      $ make show               # show defined vars
       $ make vt                 # validate template
       $ make cs                 # create stack
       $ make se                 # follow stack events
