@@ -33,7 +33,7 @@ I built a `Makefile` with some helper tasks to accomplish that. For example:
     #
     # Write cf code... or define your param file.
     #
-    #   file:  sns-sqs-messaging.cf.template.yaml
+    #   file:  sns-sqs-messaging.template.yaml
     #   stack: sample-01
     #   param: param.sample.json
     #
