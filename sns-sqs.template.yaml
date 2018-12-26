@@ -32,43 +32,17 @@ Description: "SNS/SQS/Messaging: with dead letter and depth alarm"
 
 Parameters:
 
-  TopicName:
-    Type: String
-    Default: sample-topic-for-test
-    Description: "Name for topic/queue"
+  TopicName: { Type: String , Default: sample-topic-for-test , Description: "Name for topic/queue" }
+  Tag1Key:   { Type: String , Default: App                   , Description: "Key   for Tag1: App=sample" }
+  Tag1Value: { Type: String , Default: sample                , Description: "Value for Tag1: App=sample" }
+  Tag2Key:   { Type: String , Default: Env                   , Description: "Key   for Tag2: Env=test"   }
+  Tag2Value: { Type: String , Default: test                  , Description: "Value for Tag2: Env=test"   }
 
-  QueueRetentionPeriod:
-    Type: Number
-    Default: 1209600
-    MinValue: 50
-    MaxValue: 1209600
-    Description: "SQS MessageRetentionPeriod in seconds."
-
-  QueueAlarmDepth:
-    Type: Number
-    Default: 10000
-    MinValue: 100
-    Description: "Alarm will fire if queue grows beyond this depth."
-
-  Tag1Key:
-    Type: String
-    Default: App
-    Description: "Key for Tag1: App=sample"
-
-  Tag1Value:
-    Type: String
-    Default: sample
-    Description: "Value for Tag1: App=sample"
-
-  Tag2Key:
-    Type: String
-    Default: Env
-    Description: "Key for Tag2: Env=test"
-
-  Tag2Value:
-    Type: String
-    Default: test
-    Description: "Value for Tag2: Env=test"
+  QueueVisibilityTimeout:      { Type: Number , Default: 60      , MinValue: 0   , MaxValue: 43200   , Description: "SQS VisibilityTimeout in seconds."                      }
+  QueueRetentionPeriod:        { Type: Number , Default: 1209600 , MinValue: 50  , MaxValue: 1209600 , Description: "SQS MessageRetentionPeriod in seconds (TTL in Queue)"   }
+  QueueReceiveMessageWaitTime: { Type: Number , Default: 5       , MinValue: 0   , MaxValue: 20      , Description: "SQS ReceiveMessageWaitTime in seconds (Long Polling)."  }
+  QueueMaxReceiveCount:        { Type: Number , Default: 5       , MinValue: 3   , MaxValue: 100     , Description: "SQS MaxReceiveCount (DeadLetter: count to move to DL)." }
+  QueueAlarmDepth:             { Type: Number , Default: 10000   , MinValue: 100 , MaxValue: 1000000 , Description: "SQS Alarm if number of msg grows beyond this count."    }
 
 Resources:
 
@@ -90,21 +64,22 @@ Resources:
   ###   https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
   ###
 
-  # RetentionPeriod           VisibilityTimeout   ReceiveMessageWaitTime
-  #     Min:      60s -  1m         0s                  0s
-  #     Max: 1209600s - 14d     43200s - 12h           20s
-  # Default:  345600s -  4d        30s                  0s
+  # VisibilityTimeout   RetentionPeriod           ReceiveMessageWaitTime
+  # ------------------- ------------------------- ----------------------
+  #     0s                  Min:      60s -  1m    0s
+  # 43200s - 12h            Max: 1209600s - 14d   20s
+  #    30s              Default:  345600s -  4d    0s
   #
   MySQSQueue:
     Type: AWS::SQS::Queue
     Properties:
       QueueName: !Ref TopicName
-      VisibilityTimeout: 60
+      VisibilityTimeout: !Ref QueueVisibilityTimeout
       MessageRetentionPeriod: !Ref QueueRetentionPeriod
-      ReceiveMessageWaitTimeSeconds: 5
+      ReceiveMessageWaitTimeSeconds: !Ref QueueReceiveMessageWaitTime
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt [ "MySQSDeadLetter", "Arn" ]
-        maxReceiveCount: 10
+        maxReceiveCount: !Ref QueueMaxReceiveCount
       Tags:
         - { "Key" : !Ref Tag1Key, "Value" : !Ref Tag1Value }
         - { "Key" : !Ref Tag2Key, "Value" : !Ref Tag2Value }

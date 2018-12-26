@@ -5,7 +5,10 @@
   { "ParameterKey": "Tag1Value" , "ParameterValue": "sample" },
   { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"    },
   { "ParameterKey": "Tag2Value" , "ParameterValue": "test"   },
-  { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
-  { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "500"   }
+  { "ParameterKey": "QueueVisibilityTimeout"      , "ParameterValue": "60"      },
+  { "ParameterKey": "QueueRetentionPeriod"        , "ParameterValue": "1209600" },
+  { "ParameterKey": "QueueReceiveMessageWaitTime" , "ParameterValue": "5"       },
+  { "ParameterKey": "QueueMaxReceiveCount"        , "ParameterValue": "5"       },
+  { "ParameterKey": "QueueAlarmDepth"             , "ParameterValue": "500"     }
 ]
 

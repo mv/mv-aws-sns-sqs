@@ -5,7 +5,10 @@
   { "ParameterKey": "Tag1Value" , "ParameterValue": "cloudtrail"    },
   { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"           },
   { "ParameterKey": "Tag2Value" , "ParameterValue": "organizations" },
-  { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
-  { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "10000"   }
+  { "ParameterKey": "QueueVisibilityTimeout"      , "ParameterValue": "60"      },
+  { "ParameterKey": "QueueRetentionPeriod"        , "ParameterValue": "1209600" },
+  { "ParameterKey": "QueueReceiveMessageWaitTime" , "ParameterValue": "5"       },
+  { "ParameterKey": "QueueMaxReceiveCount"        , "ParameterValue": "5"       },
+  { "ParameterKey": "QueueAlarmDepth"             , "ParameterValue": "10000"   }
 ]
 
