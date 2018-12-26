@@ -7,22 +7,33 @@ SNS Topic and SQS Queue for messaging, with a dead letter and alarm on queue
 depth.
 
 
-## Basic workflow
-
-
-A parameter file must be defined to create a topic/queue combination. Also,
-`tags` are being used to track the cost of resources.
-
+## Naming
 
 Those are the conventions:
 
     ```
-    Stack     Param     TopicName        QueueName        DeadLetter                  Alarm
-    sample-01 sample    sample-alerts    sample-alerts    sample-alerts-deadletter    sample-alerts-sqs-alarm
-    sample-02 sample-02 sample-02-alerts sample-02-alerts sample-02-alerts-deadletter sample-02-alerts-sqs-alarm
-    org-trail org-trail org-trail-alerts org-trail-alerts org-trail-alerts-deadletter org-trail-alerts-sqs-alarm
+    stack=stackname                     file.param.json: TopicName
+    ----------------------------------- --------------------------
+    1. sample-01                        sample
+    2. mv-aws-cloudtrail-alerts         mv-aws-cloudtrail-alerts
+    3. mv-aws-cloudtrail-deliveries     mv-aws-cloudtrail-deliveries
+    4. mv-aws-notifications             mv-aws-notifications
+
+
+    TopicName/QueueName            deadletter                     Alarm
+    ------------------------------ ------------------------------ -------------------------------------
+    1. sample                      sample-dl                      sqs-alarm-sample
+    2. mvaws-cloudtrail-alerts     mvaws-cloudtrail-alerts-dl     sqs-alarm-mvaws-cloudtrail-alerts
+    3. mvaws-cloudtrail-deliveries mvaws-cloudtrail-deliveries-dl sqs-alarm-mvaws-cloudtrail-deliveries
+    4. mvaws-notifications         mvaws-notifications-dl         sqs-alarm-mvaws-notifications
+
     ```
 
+
+## Basic workflow
+
+A parameter file must be defined to create a topic/queue combination. Also,
+`tags` are being used to track the cost of resources.
 
 
 I built a `Makefile` with some helper tasks to accomplish that. For example:
