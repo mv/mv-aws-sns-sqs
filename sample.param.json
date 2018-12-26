@@ -1,6 +1,6 @@
 
 [
-  { "ParameterKey": "TopicName" , "ParameterValue": "sample" },
+  { "ParameterKey": "TopicName" , "ParameterValue": "sns-sqs-sample" },
   { "ParameterKey": "Tag1Key"   , "ParameterValue": "App"    },
   { "ParameterKey": "Tag1Value" , "ParameterValue": "sample" },
   { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"    },

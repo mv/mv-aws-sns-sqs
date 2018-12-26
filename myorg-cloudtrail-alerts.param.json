@@ -1,8 +1,8 @@
 
 [
-  { "ParameterKey": "TopicName" , "ParameterValue": "my-org-cloudtrail" },
+  { "ParameterKey": "TopicName" , "ParameterValue": "myorg-cloudtrail-alerts" },
   { "ParameterKey": "Tag1Key"   , "ParameterValue": "App"           },
-  { "ParameterKey": "Tag1Value" , "ParameterValue": "Cloudtrail"    },
+  { "ParameterKey": "Tag1Value" , "ParameterValue": "cloudtrail"    },
   { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"           },
   { "ParameterKey": "Tag2Value" , "ParameterValue": "organizations" },
   { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
