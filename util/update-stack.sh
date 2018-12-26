@@ -18,9 +18,10 @@ usage() {
 [ "${param}" != "" ] && paramf="--parameters file://${param}"
 
 echo "--"
-echo "-- file=[${file}]"
-echo "-- stack=[${stack}]"
-echo "-- param=[${param}]"
+echo "-- Env:"
+echo "--   file=[${file}]"
+echo "--   stack=[${stack}]"
+echo "--   param=[${param}]"
 echo
 
 set -x
