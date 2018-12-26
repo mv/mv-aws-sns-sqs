@@ -1,0 +1,11 @@
+
+[
+  { "ParameterKey": "TopicName" , "ParameterValue": "myorg-notifications" },
+  { "ParameterKey": "Tag1Key"   , "ParameterValue": "App"    },
+  { "ParameterKey": "Tag1Value" , "ParameterValue": "infra"  },
+  { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"    },
+  { "ParameterKey": "Tag2Value" , "ParameterValue": "infra"  },
+  { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
+  { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "10000"   }
+]
+

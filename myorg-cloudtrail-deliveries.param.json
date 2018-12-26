@@ -1,0 +1,11 @@
+
+[
+  { "ParameterKey": "TopicName" , "ParameterValue": "myorg-cloudtrail-deliveries" },
+  { "ParameterKey": "Tag1Key"   , "ParameterValue": "App"           },
+  { "ParameterKey": "Tag1Value" , "ParameterValue": "cloudtrail"    },
+  { "ParameterKey": "Tag2Key"   , "ParameterValue": "Env"           },
+  { "ParameterKey": "Tag2Value" , "ParameterValue": "organizations" },
+  { "ParameterKey": "QueueRetentionPeriod" , "ParameterValue": "1209600" },
+  { "ParameterKey": "QueueAlarmDepth"      , "ParameterValue": "10000"   }
+]
+
