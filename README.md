@@ -67,22 +67,6 @@ Those are the conventions:
     $ make se  # follow stack events
     ```
 
-I built a `Makefile` with some helper tasks to accomplish that. For example:
-
-    ```bash
-    $
-    #
-    # Write cf code... or define your param file.
-    #
-    #   file:  sns-sqs.template.yaml
-    #   stack: sample-01
-    #   param: param.sample.json
-    #
-    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make vt   # validate...
-    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make cs   # created!
-    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make se   # follow stack events
-    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make pub  # test: publish to topic
-    ```
 
 
 ## Makefile
@@ -97,9 +81,9 @@ I built a `Makefile` with some helper tasks to accomplish that. For example:
       $ file=filename.yml stack=stackname [param=paramfile] make us # update stack
 
     Where:
-      filename:   AWS Cloudformation template file to be used.
-      stackname:  AWS Cloudformation stack name to be created.
-      paramfile:  Parameter file in JSON format.
+      filename.yml: AWS Cloudformation template file to be used.
+      stackname:    AWS Cloudformation stack name to be created.
+      paramfile:    Parameter file in JSON format.
 
 
     Usage (faster):
