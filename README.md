@@ -19,8 +19,8 @@ Those are the conventions:
     ```
     Stack             TopicName         QueueName         DeadLetter                   Alarm
     sample-01         sample-01         sample-01         sample-01-deadletter         sample-01
-    sample-02         sample-01         sample-01         sample-01-deadletter         sample-01
-    trail-org         trail-org         trail-org         trail-org-deadletter         trail-org
+    sample-02         sample-02         sample-02         sample-02-deadletter         sample-02
+    org-trail         org-trail         org-trail         org-trail-deadletter         org-trail
     trail-data-plane  trail-data-plane  trail-data-plane  trail-data-plane-deadletter  trail-data-plane
     ```
 
