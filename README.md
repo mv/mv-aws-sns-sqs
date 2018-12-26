@@ -33,14 +33,14 @@ I built a `Makefile` with some helper tasks to accomplish that. For example:
     #
     # Write cf code... or define your param file.
     #
-    #   file:  sns-sqs-messaging.template.yaml
+    #   file:  sns-sqs.template.yaml
     #   stack: sample-01
     #   param: param.sample.json
     #
-    $ file=sns-sqs-messaging stack=sample-01 param=param.sample.json make vt   # validate...
-    $ file=sns-sqs-messaging stack=sample-01 param=param.sample.json make cs   # created!
-    $ file=sns-sqs-messaging stack=sample-01 param=param.sample.json make se   # follow stack events
-    $ file=sns-sqs-messaging stack=sample-01 param=param.sample.json make pub  # test: publish to topic
+    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make vt   # validate...
+    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make cs   # created!
+    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make se   # follow stack events
+    $ file=sns-sqs.template.yaml stack=sample-01 param=param.sample.json make pub  # test: publish to topic
     ```
 
 
