@@ -10,17 +10,20 @@ depth.
 ## Basic workflow
 
 
-When creating new stacks in my dev account generally I need:
+A parameter file must be defined to create a topic/queue combination. Also,
+`tags` are being used to track the cost of resources.
 
-1. Write cf code.
-2. Validate cf code.
-3. Create a stack with a name.
-4. Update that stack many times.
-5. Update that stack many times, with parameters.
-6. Create the same stack, with a different name.
-7. Idem 4.
-8. Idem 5.
-9. Go back to 1.
+
+Those are the conventions:
+
+    ```
+    Stack             TopicName         QueueName         DeadLetter                   Alarm
+    sample-01         sample-01         sample-01         sample-01-deadletter         sample-01
+    sample-02         sample-01         sample-01         sample-01-deadletter         sample-01
+    trail-org         trail-org         trail-org         trail-org-deadletter         trail-org
+    trail-data-plane  trail-data-plane  trail-data-plane  trail-data-plane-deadletter  trail-data-plane
+    ```
+
 
 
 I built a `Makefile` with some helper tasks to accomplish that. For example:
