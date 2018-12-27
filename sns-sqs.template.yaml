@@ -98,7 +98,7 @@ Resources:
             Effect: "Allow"
             Action: "sqs:SendMessage"
             Resource: !GetAtt [ "MySQSQueue" , "Arn" ]
-            Principal: "*"
+            Principal: { "Service":"sns.amazonaws.com" }
             Condition:
               ArnEquals: { "aws:SourceArn": !Ref MySNSTopic }
       Queues:
