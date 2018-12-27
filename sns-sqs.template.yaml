@@ -97,7 +97,7 @@ Resources:
             Sid: "Allow-SQSSendMessage-From-SNSTopic"
             Effect: "Allow"
             Action: "sqs:SendMessage"
-            Resource: "*"
+            Resource: !GetAtt [ "MySQSQueue" , "Arn" ]
             Principal: "*"
             Condition:
               ArnEquals: { "aws:SourceArn": !Ref MySNSTopic }
