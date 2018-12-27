@@ -38,11 +38,11 @@ Parameters:
   Tag2Key:   { Type: String , Default: Env                   , Description: "Key   for Tag2: Env=test"   }
   Tag2Value: { Type: String , Default: test                  , Description: "Value for Tag2: Env=test"   }
 
-  QueueVisibilityTimeout:      { Type: Number , Default: 60      , MinValue: 0   , MaxValue: 43200   , Description: "SQS VisibilityTimeout in seconds."                      }
-  QueueRetentionPeriod:        { Type: Number , Default: 1209600 , MinValue: 50  , MaxValue: 1209600 , Description: "SQS MessageRetentionPeriod in seconds (TTL in Queue)"   }
-  QueueReceiveMessageWaitTime: { Type: Number , Default: 5       , MinValue: 0   , MaxValue: 20      , Description: "SQS ReceiveMessageWaitTime in seconds (Long Polling)."  }
-  QueueMaxReceiveCount:        { Type: Number , Default: 5       , MinValue: 3   , MaxValue: 100     , Description: "SQS MaxReceiveCount (DeadLetter: count to move to DL)." }
-  QueueAlarmDepth:             { Type: Number , Default: 10000   , MinValue: 100 , MaxValue: 1000000 , Description: "SQS Alarm if number of msg grows beyond this count."    }
+  QueueRetentionPeriod:        { Type: Number , Default: 1209600 , MinValue: 50  , MaxValue: 1209600 , Description: "SQS MessageRetentionPeriod in seconds (Default: 14d)"    }
+  QueueVisibilityTimeout:      { Type: Number , Default: 60      , MinValue: 0   , MaxValue: 43200   , Description: "SQS VisibilityTimeout in seconds. (Default: 60s)"        }
+  QueueReceiveMessageWaitTime: { Type: Number , Default: 5       , MinValue: 0   , MaxValue: 20      , Description: "SQS ReceiveMessageWaitTime in seconds (LongPolling: 5s)" }
+  QueueMaxReceiveCount:        { Type: Number , Default: 5       , MinValue: 3   , MaxValue: 100     , Description: "SQS MaxReceiveCount (Move to DeadLetter if gt count)"    }
+  QueueAlarmDepth:             { Type: Number , Default: 10000   , MinValue: 100 , MaxValue: 1000000 , Description: "SQS Alarm if msgs in queue grows beyond this count"      }
 
 Resources:
 
